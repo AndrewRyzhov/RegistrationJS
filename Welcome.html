@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Registration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Registration</h1>
+</div>
+
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading" id='name'></h4>
+  <p>You hase successfully registered on this portal. Please verify your email address.</p>
+  <hr>
+  <p class="mb-0" id='email'></p>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  let nameView = document.getElementById('name');
+  let emailView = document.getElementById('email');
+
+  let greeting = 'Welcome ' + localStorage.getItem('firstName') + ' ' +
+    localStorage.getItem('lastName') + '!';
+
+  nameView.textContent = greeting;
+  emailView.textContent = localStorage.getItem('email');
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>Registration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Registration</h1>
+</div>
+
+<div class="container text-center">
+  <form class="needs-validation" id="registrationForm" action="Welcome.html" novalidate >
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" name="firstName" placeholder="First Name *" required>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" name="lastName" placeholder="Last Name *" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control" name="email" placeholder="Email Adress *" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="password" class="form-control" name="password1" placeholder="Password *" required>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="password" class="form-control" name="password2" placeholder="Confirm Password *" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign up</button>
+  </form>
+</div>
+
+<script>
+NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+
+var anyError = false;
+
+window.addEventListener('unload', e => {
+  let inputList = document.getElementsByTagName('input');
+  for (let input of inputList) {
+    if (!input.name.includes('password')) {
+      localStorage.setItem(input.name, input.value);
+    }
+  }
+});
+
+function resetError(element) {
+  element.className = 'form-control';
+}
+
+function showError(element) {
+  element.className = 'form-control is-invalid';
+  anyError = true;
+}
+
+function validateText(input) {
+  resetError(input);
+  if (!input.value || input.value.length > 10) {
+    showError(input);
+  }
+}
+
+function validateEmail(input) {
+  resetError(input);
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (!re.test(input.value)) {
+    showError(input);
+  }
+}
+
+window.addEventListener('load', () => {
+  let inputList = document.getElementsByTagName('input');
+  for (let input of inputList) {
+    let val = localStorage.getItem(input.name);
+    if (val !== null) {
+      input.value = val;
+    }
+  }
+
+  let forms = document.getElementsByClassName('needs-validation');
+  for (let form of forms) {
+    form.addEventListener('submit', event => {
+      anyError = false;
+      let elems = form.elements;
+
+      validateText(elems.firstName);
+      validateText(elems.lastName);
+      validateEmail(elems.email);
+
+      validateText(elems.password1);
+      validateText(elems.password2);
+      if (elems.password1.value && elems.password2.value
+        && elems.password1.value !== elems.password2.value) {
+          showError(elems.password1);
+          showError(elems.password2);
+      }
+
+      if (anyError) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>
